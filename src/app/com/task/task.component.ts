@@ -18,6 +18,7 @@ taskList:Task[]=[]
   })
   ModeEdite: boolean=false;
   id?: number;
+  loading: boolean=true;
   constructor(private todosrv:TodoDataService,
               private fb:FormBuilder) { }
 
@@ -28,7 +29,10 @@ taskList:Task[]=[]
   GetTasks() {
     this.todosrv.getAllTasks().subscribe(res=>{
     if(res)
+      this.loading = false
       this.taskList=res
+    },error => {
+      this.loading=true
     })
   }
 
@@ -64,12 +68,13 @@ taskList:Task[]=[]
         }
         this.todosrv.updateTaskById(this.id,data).subscribe(res=>{
           if(res){
+            this.loading=false
             this.ModeEdite=false
             this.FormtTask.reset()
             Swal.fire({icon: 'success', text: 'با موفقیت ویرایش شد'})
           }
         },error => {
-          console.log(error)
+          this.loading=true
         })
       }
       else {
@@ -80,9 +85,12 @@ taskList:Task[]=[]
         }
         this.todosrv.addTask(data).subscribe(res=>{
           if(res){
+            this.loading=false
             Swal.fire({icon: 'success', text: 'با موفقیت ثبت شد'})
             this.FormtTask.reset()
           }
+        },error => {
+          this.loading=true
         })
       }
     }

@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TaskComponent } from './com/task/task.component';
+import {ngxLoadingAnimationTypes, NgxLoadingModule} from 'ngx-loading';
 
 
 @NgModule({
@@ -15,7 +16,15 @@ import { TaskComponent } from './com/task/task.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.4)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
