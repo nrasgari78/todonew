@@ -1,0 +1,74 @@
+.cardOne{
+  direction: rtl;
+  margin-bottom: 15px;
+  padding: 0;
+  width: 90%;
+}
+.custom-card{
+  border-radius: 10px;
+  -webkit-box-shadow: -1px 3px 20px -2px #000000;
+  box-shadow: -1px 3px 20px -2px #DDDDDD;
+}
+
+.table{
+  border: 1px solid black;
+  width: 93% !important;
+  margin-right: auto;
+  margin-left: auto;
+
+}
+.btnSabt{
+  background-color: #70AF85 !important;color: white;width: 80px !important;
+  margin-left: 5px;
+}
+.btnSabt:hover{
+  transform: translateY(-2px) !important;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  background-color: #97BFB4 !important;
+}
+.btnSabt:focus{
+  outline: none;
+  box-shadow: none;
+}
+.btnCancel1{
+  background-color: #F65C78 !important;color: white;width: 80px !important
+}
+
+.btnCancel1:focus{
+  outline: none;
+  box-shadow: none;
+}
+.btnCancel1:hover{
+  transform: translateY(-2px) !important;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  background-color: #B8405E !important;
+}
+.form-control{
+  border-radius: 10px;
+  border: 2px solid #70AF85;
+  width:50%;
+  height: 30px;
+  font-size: 14px;
+  margin-right:5px;
+}
+.form-control:focus{
+  outline: none;
+  box-shadow: none;
+  border: 2px solid #54E346;
+}
+
+
+.td-wrap{
+  word-wrap:break-word
+}
+.imgAction{
+  cursor: pointer
+}
+thead{
+  background-color: #84A9AC;box-shadow: inset 1px 1px 10px 0 #000000;color: white;font-size: 17px
+}
+.card-header{
+  background-color: #D3E4CD
+}

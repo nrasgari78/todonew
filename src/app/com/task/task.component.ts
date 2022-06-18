@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TodoDataService} from "../../services/todo-data.service";
 import {Task} from "../../services/todo-data.service";
 import {FormBuilder, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
+import {DetailComponent} from "../detail/detail.component";
+import {TableComponent} from "../../shared/table/table.component";
 
 @Component({
   selector: 'app-task',
@@ -10,12 +12,10 @@ import Swal from "sweetalert2";
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit {
-taskList:Task[]=[]
-  FormtTask=this.fb.group({
-    title:['', [Validators.required]],
-    description:['', [Validators.required]],
-    completed:[false]
-  })
+  @ViewChild(DetailComponent)DetailComponent: DetailComponent | undefined
+  @ViewChild(TableComponent)TableComponent: TableComponent | undefined
+    taskList:Task[]=[]
+
   ModeEdite: boolean=false;
   id?: number;
   loading: boolean=true;
@@ -23,7 +23,6 @@ taskList:Task[]=[]
               private fb:FormBuilder) { }
 
   ngOnInit(): void {
-    document.getElementById('title')?.focus()
     this.GetTasks()
   }
   GetTasks() {
@@ -37,64 +36,14 @@ taskList:Task[]=[]
   }
 
   EditeTask(i:Task) {
-    document.getElementById('title')?.focus()
     this.ModeEdite=true
-    this.FormtTask.get(['title'])?.setValue(i['title'])
-    this.FormtTask.get(['description'])?.setValue(i['description'])
-    i['completed']?this.FormtTask.get(['completed'])?.setValue(true):this.FormtTask.get(['completed'])?.setValue(false)
+    this.DetailComponent?.FormtTask.get(['title'])?.setValue(i['title'])
+    this.DetailComponent?.FormtTask.get(['description'])?.setValue(i['description'])
+    i['completed']?this.DetailComponent?.FormtTask.get(['completed'])?.setValue(true):this.DetailComponent?.FormtTask.get(['completed'])?.setValue(false)
     this.id=i['id']
+    console.log( this.ModeEdite)
   }
 
-  Deny() {
-    this.FormtTask.reset()
-    this.ModeEdite=false
-    document.getElementById('title')?.focus()
-  }
-
-  submit() {
-    if(this.FormtTask.get(['title'])?.errors?.['required'])
-     Swal.fire({icon: 'error', text: 'عنوان خالی است'})
-    else
-    if(this.FormtTask.get(['description'])?.errors?.['required'])
-      Swal.fire({icon: 'error', text: 'توضیحات خالی است'})
-    else {
-
-      if(this.ModeEdite===true && this.id!=null){
-        const data={
-          'title':this.FormtTask.get(['title'])?.value,
-          'description' :this.FormtTask.get(['description'])?.value,
-          'completed':this.FormtTask.get(['completed'])?.value?true:false
-
-        }
-        this.todosrv.updateTaskById(this.id,data).subscribe(res=>{
-          if(res){
-            this.loading=false
-            this.ModeEdite=false
-            this.FormtTask.reset()
-            Swal.fire({icon: 'success', text: 'با موفقیت ویرایش شد'})
-          }
-        },error => {
-          this.loading=true
-        })
-      }
-      else {
-        const data={
-          'title':this.FormtTask.get(['title'])?.value,
-          'description' :this.FormtTask.get(['description'])?.value,
-          'completed' :false
-        }
-        this.todosrv.addTask(data).subscribe(res=>{
-          if(res){
-            this.loading=false
-            Swal.fire({icon: 'success', text: 'با موفقیت ثبت شد'})
-            this.FormtTask.reset()
-          }
-        },error => {
-          this.loading=true
-        })
-      }
-    }
-  }
 
   DeleteTask(i:Task) {
     Swal.fire({
@@ -115,4 +64,58 @@ taskList:Task[]=[]
   }
   })
 }
+  submit() {
+    console.log(this.id)
+    console.log(this.ModeEdite)
+    if(this.DetailComponent?.FormtTask.get(['title'])?.errors?.['required'])
+      Swal.fire({icon: 'error', text: 'عنوان خالی است'})
+    else
+    if(this.DetailComponent?.FormtTask.get(['description'])?.errors?.['required'])
+      Swal.fire({icon: 'error', text: 'توضیحات خالی است'})
+    else {
+
+      if(this.ModeEdite===true && this.id!=null){
+
+        const data={
+          'title':this.DetailComponent?.FormtTask.get(['title'])?.value,
+          'description' :this.DetailComponent?.FormtTask.get(['description'])?.value,
+          'completed':this.DetailComponent?.FormtTask.get(['completed'])?.value?true:false
+
+        }
+        this.todosrv.updateTaskById(this.id,data).subscribe(res=>{
+          if(res){
+            this.loading=false
+            this.ModeEdite=false
+            this.DetailComponent?.FormtTask.reset()
+            Swal.fire({icon: 'success', text: 'با موفقیت ویرایش شد'})
+          }
+        },error => {
+          this.loading=true
+        })
+      }
+      else {
+        const data={
+          'title':this.DetailComponent?.FormtTask.get(['title'])?.value,
+          'description' :this.DetailComponent?.FormtTask.get(['description'])?.value,
+          'completed' :false
+        }
+        this.todosrv.addTask(data).subscribe(res=>{
+          if(res){
+            this.loading=false
+            Swal.fire({icon: 'success', text: 'با موفقیت ثبت شد'})
+            this.DetailComponent?.FormtTask.reset()
+          }
+        },error => {
+          this.loading=true
+        })
+      }
+    }
+
+  }
+
+  Deny() {
+    this.DetailComponent?.FormtTask.reset()
+    this.ModeEdite=false
+    document.getElementById('title')?.focus()
+  }
 }

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="card custom-card cardOne mt-1 " >
+      <div class="card-header text-center" >
+        برنامه روزانه
+      </div>
+      <div class="card-body">
+        <form [formGroup]="FormtTask">
+          <div class="row" >
+            <div  class="col-12 d-flex" >
+              <div class="col-4 d-flex">
+                <label class="col-form-label" > عنوان: </label>
+                <input type="text" id="title" formControlName="title"  class="form-control" >
+              </div>
+              <div class="col-6 d-flex">
+                <label class="col-form-label">توضیحات:</label>
+                <textarea rows="5" formControlName="description"  class="form-control" ></textarea>
+              </div>
+
+            </div>
+            <div *ngIf="ModeEdite" class="col-12 d-flex">
+              <div class="col-6 d-flex">
+                <label class="col-form-label" > وضعیت انجام کار: </label>
+                <input  type="checkbox" formControlName="completed"  class="form-check-input mx-2" >
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
