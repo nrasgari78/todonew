@@ -10,18 +10,18 @@
             <div  class="col-12 d-flex" >
               <div class="col-4 d-flex">
                 <label class="col-form-label" > عنوان: </label>
-                <input type="text" id="title" formControlName="title"  class="form-control" >
+                <input type="text" id="title" [ngModel]="selectedrecord?selectedrecord['title']:''" formControlName="title"  class="form-control" >
               </div>
               <div class="col-6 d-flex">
                 <label class="col-form-label">توضیحات:</label>
-                <textarea rows="5" formControlName="description"  class="form-control" ></textarea>
+                <textarea rows="5" [ngModel]="selectedrecord?selectedrecord['description']:''" formControlName="description"  class="form-control" ></textarea>
               </div>
 
             </div>
             <div *ngIf="ModeEdite" class="col-12 d-flex">
               <div class="col-6 d-flex">
                 <label class="col-form-label" > وضعیت انجام کار: </label>
-                <input  type="checkbox" formControlName="completed"  class="form-check-input mx-2" >
+                <input  type="checkbox" formControlName="completed" [checked]="selectedrecord?selectedrecord['completed']:false" class="form-check-input mx-2" >
               </div>
             </div>
           </div>
