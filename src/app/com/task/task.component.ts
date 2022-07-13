@@ -1,4 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterContentChecked, AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  OnChanges,
+  OnInit, Output,
+  ViewChild
+} from '@angular/core';
 import {TodoDataService} from "../../services/todo-data.service";
 import {Task} from "../../services/todo-data.service";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -11,20 +20,30 @@ import {TableComponent} from "../../shared/table/table.component";
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit,DoCheck{
   @ViewChild(DetailComponent)DetailComponent: DetailComponent | undefined
-  @ViewChild(TableComponent)TableComponent: TableComponent | undefined
-    taskList:Task[]=[]
 
-  ModeEdite: boolean=false;
+  taskList:Task[]=[]
+  selected?:any
+  ModeEdite: boolean | undefined
   id?: number;
   loading: boolean=true;
-  constructor(private todosrv:TodoDataService,
-              private fb:FormBuilder) { }
+  constructor(private todosrv:TodoDataService) { }
 
   ngOnInit(): void {
     this.GetTasks()
   }
+  ngDoCheck() {
+  if(this.id!=null)
+    this.todosrv.deleteTaskById(this.id).subscribe(res=>{
+      if(res) {
+        Swal.fire({icon: 'success', text: 'با موفقیت حذف شد'})
+        this.GetTasks()
+        this.id = undefined
+      }
+    })
+}
+
   GetTasks() {
     this.todosrv.getAllTasks().subscribe(res=>{
     if(res)
@@ -33,15 +52,6 @@ export class TaskComponent implements OnInit {
     },error => {
       this.loading=true
     })
-  }
-
-  EditeTask(i:Task) {
-    this.ModeEdite=true
-    this.DetailComponent?.FormtTask.get(['title'])?.setValue(i['title'])
-    this.DetailComponent?.FormtTask.get(['description'])?.setValue(i['description'])
-    i['completed']?this.DetailComponent?.FormtTask.get(['completed'])?.setValue(true):this.DetailComponent?.FormtTask.get(['completed'])?.setValue(false)
-    this.id=i['id']
-    console.log( this.ModeEdite)
   }
 
 
@@ -64,9 +74,8 @@ export class TaskComponent implements OnInit {
   }
   })
 }
-  submit() {
-    console.log(this.id)
-    console.log(this.ModeEdite)
+  submit() : any{
+
     if(this.DetailComponent?.FormtTask.get(['title'])?.errors?.['required'])
       Swal.fire({icon: 'error', text: 'عنوان خالی است'})
     else
@@ -113,7 +122,7 @@ export class TaskComponent implements OnInit {
 
   }
 
-  Deny() {
+  Deny() :any{
     this.DetailComponent?.FormtTask.reset()
     this.ModeEdite=false
     document.getElementById('title')?.focus()

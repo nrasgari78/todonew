@@ -1,7 +1,6 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Task} from "../../services/todo-data.service";
 import Swal from "sweetalert2";
-import {Task, TodoDataService} from "../../services/todo-data.service";
-import {DetailComponent} from "../../com/detail/detail.component";
 
 @Component({
   selector: 'app-table',
@@ -10,10 +9,35 @@ import {DetailComponent} from "../../com/detail/detail.component";
 })
 export class TableComponent implements OnInit {
   @Input() list:any
+  @Output() public eventEmitterModeEdite=new EventEmitter<any>()
+  @Output() public eventEmitterEdite=new EventEmitter<any>()
+  @Output() public eventEmitterDelete=new EventEmitter<any>()
 
+  id?: number;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  EditeTask(i:Task) {
+    this.id=i['id']
+    this.eventEmitterModeEdite.emit(true)
+    this.eventEmitterEdite.emit(i)
+  }
+
+  DeleteTask(i:Task) {
+    Swal.fire({
+      title:  '<h5 /> آیا از حذف عنوان <h5> ' + i.title +   '<h5/> از لیست کاری مطمئن هستید؟<h5>'   ,
+      showCancelButton: true,
+      confirmButtonText: 'بله',
+      cancelButtonText: `خیر`,
+      icon:'question'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const id=i['id']
+        this.eventEmitterDelete.emit(id)
+
+      }
+    })
+  }
 }

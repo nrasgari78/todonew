@@ -12,7 +12,7 @@
 
 .table{
   border: 1px solid black;
-  width: 93% !important;
+  width: 75% !important;
   margin-right: auto;
   margin-left: auto;
 
@@ -26,37 +26,6 @@
   transition: all 0.2s ease-in-out;
   color: white;
   background-color: #97BFB4 !important;
-}
-.btnSabt:focus{
-  outline: none;
-  box-shadow: none;
-}
-.btnCancel1{
-  background-color: #F65C78 !important;color: white;width: 80px !important
-}
-
-.btnCancel1:focus{
-  outline: none;
-  box-shadow: none;
-}
-.btnCancel1:hover{
-  transform: translateY(-2px) !important;
-  transition: all 0.2s ease-in-out;
-  color: white;
-  background-color: #B8405E !important;
-}
-.form-control{
-  border-radius: 10px;
-  border: 2px solid #70AF85;
-  width:50%;
-  height: 30px;
-  font-size: 14px;
-  margin-right:5px;
-}
-.form-control:focus{
-  outline: none;
-  box-shadow: none;
-  border: 2px solid #54E346;
 }
 
 
