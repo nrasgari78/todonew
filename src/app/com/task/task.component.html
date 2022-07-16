@@ -2,7 +2,10 @@
   <div class="row justify-content-center mt-5">
     <app-detail [ModeEdite]="ModeEdite" [selectedrecord]="selected"></app-detail>
 
-    <app-table (eventEmitterEdite)="selected=$event" [list]="taskList" (eventEmitter)="id=$event" (eventEmitterModeEdite)="ModeEdite=$event"></app-table>
+    <app-table (eventEmitterEdite)="selected=$event" [list]="taskList" (eventEmitter)="id=$event" (eventEmitterModeEdite)="ModeEdite=$event">
+      <div class="green" ></div>
+
+    </app-table>
       </div>
     <div class="col-2">
       <button type="button" class="btn btnSabt" (click)="submit()" >

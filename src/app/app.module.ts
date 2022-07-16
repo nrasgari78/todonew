@@ -8,6 +8,7 @@ import { DetailComponent } from './com/detail/detail.component';
 import { TasktableDirective } from './directive/tasktable.directive';
 import {SharedModule} from "./shared/shared.module";
 import {ngxLoadingAnimationTypes, NgxLoadingModule} from "ngx-loading";
+import {MouseoverDirective} from "./directive/mouseover.directive";
 
 
 @NgModule({

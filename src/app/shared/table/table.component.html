@@ -1,4 +1,6 @@
+
 <div class="card custom-card cardOne mt-1 ">
+  <ng-content select=".green"></ng-content>
   <div class="card-header text-center" >لیست کارها
   </div>
   <div class="card-body">
@@ -15,7 +17,7 @@
     </tr>
     </thead>
     <tbody *ngIf="list.length>0" >
-    <tr *ngFor="let i of list" >
+    <tr *ngFor="let i of list"  appmouse>
       <th class="col-1 td-wrap text-center">{{i['id']}}</th>
       <th class="col-2 td-wrap">{{i['title']}}</th>
       <th class="col-4 td-wrap">{{i['description']}}</th>

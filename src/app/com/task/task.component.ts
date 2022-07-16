@@ -37,14 +37,14 @@ ngOnChanges(changes: SimpleChanges) {
 
   ngOnInit(): void {
     this.GetTasks()
-
   }
+
   ngDoCheck() {
     if(this.ModeEdite===true && this.selected!=null)
       this.todosrv.SendMessage(this.message)
-  if(this.id!=null && !this.ModeEdite)
+    if(this.id!=null && !this.ModeEdite)
     this.todosrv.deleteTaskById(this.id).subscribe(res=>{
-      if(res) {
+     if(res) {
         Swal.fire({icon: 'success', text: 'با موفقیت حذف شد'})
         this.GetTasks()
         this.id = undefined
@@ -62,7 +62,6 @@ ngOnChanges(changes: SimpleChanges) {
     })
   }
   submit() : any{
-
     if(this.DetailComponent?.FormtTask.get(['title'])?.errors?.['required'])
       Swal.fire({icon: 'error', text: 'عنوان خالی است'})
     else
@@ -76,7 +75,6 @@ ngOnChanges(changes: SimpleChanges) {
           'title':this.DetailComponent?.FormtTask.get(['title'])?.value,
           'description' :this.DetailComponent?.FormtTask.get(['description'])?.value,
           'completed':this.DetailComponent?.FormtTask.get(['completed'])?.value?true:false
-
         }
         this.todosrv.updateTaskById(this.selected.id,data).subscribe(res=>{
           if(res){
