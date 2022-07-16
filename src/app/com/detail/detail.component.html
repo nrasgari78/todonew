@@ -1,7 +1,8 @@
 
     <div class="card custom-card cardOne mt-1 " >
       <div class="card-header text-center" >
-        برنامه روزانه
+        <p *ngIf="ModeEdite">{{message}}</p>
+        <p *ngIf="!ModeEdite">{{message1}}</p>
       </div>
       <div class="card-body">
         <form [formGroup]="FormtTask">

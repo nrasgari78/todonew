@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
+import {TodoDataService} from "../../services/todo-data.service";
 
 @Component({
   selector: 'app-detail',
@@ -9,15 +10,21 @@ import {FormBuilder, Validators} from "@angular/forms";
 export class DetailComponent implements OnInit{
   @Input() ModeEdite: boolean | undefined = false ;
   @Input() selectedrecord?:any
-
-  FormtTask=this.fb.group({
+   message:string=''
+   message1:string='برنامه روزانه'
+   FormtTask=this.fb.group({
     title:['', [Validators.required]],
     description:['', [Validators.required]],
     completed:[false]
   })
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder,
+              private todosrv:TodoDataService ) { }
 ngOnInit() {
-
+this.todosrv.GetMessage().subscribe(res=>{
+  if(res)
+  this.message=res
+})
 }
+
 }

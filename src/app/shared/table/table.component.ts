@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges} from '@angular/core';
 import {Task} from "../../services/todo-data.service";
 import Swal from "sweetalert2";
 
@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit ,OnChanges{
   @Input() list:any
   @Output() public eventEmitterModeEdite=new EventEmitter<any>()
   @Output() public eventEmitterEdite=new EventEmitter<any>()
@@ -15,7 +15,9 @@ export class TableComponent implements OnInit {
 
   id?: number;
   constructor() { }
-
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes',changes)
+  }
   ngOnInit(): void {
   }
 

@@ -5,7 +5,7 @@ import {
   Component,
   DoCheck,
   OnChanges,
-  OnInit, Output,
+  OnInit, Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {TodoDataService} from "../../services/todo-data.service";
@@ -20,9 +20,9 @@ import {TableComponent} from "../../shared/table/table.component";
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit,DoCheck{
+export class TaskComponent implements OnInit,DoCheck,OnChanges{
   @ViewChild(DetailComponent)DetailComponent: DetailComponent | undefined
-
+  message:any='برنامه روزانه در حال ویرایش'
   taskList:Task[]=[]
   selected?:any
   ModeEdite: boolean | undefined
@@ -30,10 +30,18 @@ export class TaskComponent implements OnInit,DoCheck{
   loading: boolean=true;
   constructor(private todosrv:TodoDataService) { }
 
+
+ngOnChanges(changes: SimpleChanges) {
+    console.log('changes',changes)
+}
+
   ngOnInit(): void {
     this.GetTasks()
+
   }
   ngDoCheck() {
+    if(this.ModeEdite===true && this.selected!=null)
+      this.todosrv.SendMessage(this.message)
   if(this.id!=null && !this.ModeEdite)
     this.todosrv.deleteTaskById(this.id).subscribe(res=>{
       if(res) {
@@ -53,27 +61,6 @@ export class TaskComponent implements OnInit,DoCheck{
       this.loading=true
     })
   }
-
-
-  DeleteTask(i:Task) {
-    Swal.fire({
-      title:  '<h5 /> آیا از حذف عنوان <h5> ' + i.title +   '<h5/> از لیست کاری مطمئن هستید؟<h5>'   ,
-      showCancelButton: true,
-      confirmButtonText: 'بله',
-      cancelButtonText: `خیر`,
-      icon:'question'
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-    const id=i['id']
-    if(id!=null)
-    this.todosrv.deleteTaskById(id).subscribe(res=>{
-      if(res)  Swal.fire({icon: 'success', text: 'با موفقیت حذف شد'})
-      this.GetTasks()
-    })
-  }
-  })
-}
   submit() : any{
 
     if(this.DetailComponent?.FormtTask.get(['title'])?.errors?.['required'])

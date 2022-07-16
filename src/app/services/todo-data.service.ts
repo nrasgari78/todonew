@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {delay, Observable, of} from "rxjs";
+import {BehaviorSubject, delay, Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoDataService {
 
-
-  private todos: Task[] = [
+   message= new BehaviorSubject<string>('')
+   private todos: Task[] = [
     new Task('جلسه با آقای اسدی', 'جلسه با آقای اسدی راس ساعت 17', false,1),
     new Task('مطالعه درس ریاضی', 'مطالعه درس ریاضی تا فصل پنجم', false,2),
   ];
@@ -16,6 +16,12 @@ export class TodoDataService {
   // automatic incrementing of ids
   lastId: number = 2;
 
+  SendMessage(m:string){
+    this.message.next(m)
+  }
+  GetMessage():Observable<string>{
+    return this.message.asObservable()
+  }
   // Simulate POST /tasks
   addTask(todo: Task): Observable<Task[]> {
     if (!todo.id) {
