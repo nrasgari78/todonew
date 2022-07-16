@@ -34,7 +34,7 @@ export class TaskComponent implements OnInit,DoCheck{
     this.GetTasks()
   }
   ngDoCheck() {
-  if(this.id!=null)
+  if(this.id!=null && !this.ModeEdite)
     this.todosrv.deleteTaskById(this.id).subscribe(res=>{
       if(res) {
         Swal.fire({icon: 'success', text: 'با موفقیت حذف شد'})
@@ -83,7 +83,7 @@ export class TaskComponent implements OnInit,DoCheck{
       Swal.fire({icon: 'error', text: 'توضیحات خالی است'})
     else {
 
-      if(this.ModeEdite===true && this.id!=null){
+      if(this.ModeEdite===true && this.selected!=null){
 
         const data={
           'title':this.DetailComponent?.FormtTask.get(['title'])?.value,
@@ -91,7 +91,7 @@ export class TaskComponent implements OnInit,DoCheck{
           'completed':this.DetailComponent?.FormtTask.get(['completed'])?.value?true:false
 
         }
-        this.todosrv.updateTaskById(this.id,data).subscribe(res=>{
+        this.todosrv.updateTaskById(this.selected.id,data).subscribe(res=>{
           if(res){
             this.loading=false
             this.ModeEdite=false

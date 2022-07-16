@@ -11,7 +11,7 @@ export class TableComponent implements OnInit {
   @Input() list:any
   @Output() public eventEmitterModeEdite=new EventEmitter<any>()
   @Output() public eventEmitterEdite=new EventEmitter<any>()
-  @Output() public eventEmitterDelete=new EventEmitter<any>()
+  @Output() public eventEmitter=new EventEmitter<any>()
 
   id?: number;
   constructor() { }
@@ -20,7 +20,6 @@ export class TableComponent implements OnInit {
   }
 
   EditeTask(i:Task) {
-    this.id=i['id']
     this.eventEmitterModeEdite.emit(true)
     this.eventEmitterEdite.emit(i)
   }
@@ -35,7 +34,8 @@ export class TableComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const id=i['id']
-        this.eventEmitterDelete.emit(id)
+        this.eventEmitterModeEdite.emit(false)
+        this.eventEmitter.emit(id)
 
       }
     })
