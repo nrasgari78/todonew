@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter, SimpleChanges, OnChanges, DoCheck} from '@angular/core';
 import {Task} from "../../services/todo-data.service";
 import Swal from "sweetalert2";
 
@@ -7,19 +7,32 @@ import Swal from "sweetalert2";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit ,OnChanges{
+export class TableComponent implements OnInit ,OnChanges,DoCheck{
   @Input() list:any
   @Output() public eventEmitterModeEdite=new EventEmitter<any>()
   @Output() public eventEmitterEdite=new EventEmitter<any>()
   @Output() public eventEmitter=new EventEmitter<any>()
-
+  FilterT:string=''
+  FilterList?:Task[]
   id?: number;
   constructor() { }
+  get filterText(){
+    return this.FilterT
+  }
+  set filterText(value:string){
+    this.FilterT=value
+    this.FilterList= this.filterFunc(value)
+  }
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes',changes)
   }
   ngOnInit(): void {
   }
+  ngDoCheck() {
+    this.FilterList=this.list
+
+  }
+
 
   EditeTask(i:Task) {
     this.eventEmitterModeEdite.emit(true)
@@ -41,5 +54,17 @@ export class TableComponent implements OnInit ,OnChanges{
 
       }
     })
+  }
+  filterFunc(filterTerm:string){
+    if(this.list.length===0 || this.filterText===null)
+      return this.list
+    else{
+      return this.list.filter((res:any)=>
+      {
+     console.log(res['title'].match(filterTerm))
+      return  res['title'].match(filterTerm)
+      })
+    }
+
   }
 }

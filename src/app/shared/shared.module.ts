@@ -4,7 +4,7 @@ import {ngxLoadingAnimationTypes, NgxLoadingModule} from "ngx-loading";
 import { TableComponent } from './table/table.component';
 
 import {MouseoverDirective} from "../directive/mouseover.directive";
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     TableComponent,
@@ -14,7 +14,8 @@ import {MouseoverDirective} from "../directive/mouseover.directive";
     TableComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
 
   ]
 })
