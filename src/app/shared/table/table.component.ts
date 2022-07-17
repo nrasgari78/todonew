@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit ,OnChanges,DoCheck{
+export class TableComponent implements OnChanges{
   @Input() list:any
   @Output() public eventEmitterModeEdite=new EventEmitter<any>()
   @Output() public eventEmitterEdite=new EventEmitter<any>()
@@ -25,14 +25,9 @@ export class TableComponent implements OnInit ,OnChanges,DoCheck{
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log('changes',changes)
-  }
-  ngOnInit(): void {
-  }
-  ngDoCheck() {
     this.FilterList=this.list
 
   }
-
 
   EditeTask(i:Task) {
     this.eventEmitterModeEdite.emit(true)
@@ -61,10 +56,12 @@ export class TableComponent implements OnInit ,OnChanges,DoCheck{
     else{
       return this.list.filter((res:any)=>
       {
-     console.log(res['title'].match(filterTerm))
       return  res['title'].match(filterTerm)
       })
     }
 
+  }
+  trackByFn(index:number,item:any){
+    return item.Id_Doctor
   }
 }

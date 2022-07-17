@@ -36,7 +36,11 @@
   cursor: pointer
 }
 thead{
-  background-color: #84A9AC;box-shadow: inset 1px 1px 10px 0 #000000;color: white;font-size: 17px
+  background-color: #84A9AC;
+  box-shadow: inset 1px 1px 10px 0 #000000;
+  color: white;
+  font-size: 17px;
+  vertical-align: middle;
 }
 .card-header{
   background-color: #D3E4CD

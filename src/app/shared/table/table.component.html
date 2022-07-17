@@ -4,10 +4,10 @@
   <div class="card-header text-center" >لیست کارها
   </div>
   <div class="card-body">
-<!--  <div class="col-12 d-flex justify-content-center" style="padding: 5px">-->
-<!--    <label class="ml-2">فیلتر جستجو</label>-->
-<!--    <input [(ngModel)]="filterText" style="border: ridge" type="text">-->
-<!--  </div>-->
+  <div class="col-12 d-flex justify-content-center" style="padding: 5px">
+    <label class="">فیلتر جستجو</label>
+    <input  [(ngModel)]="filterText" style="border: ridge;margin-right: 5px" type="text">
+  </div>
     <div class="col-12 d-flex mt-1">
 
     <table  class="table table-striped table-bordered">
@@ -22,7 +22,7 @@
     </tr>
     </thead>
     <tbody *ngIf="list.length>0" >
-    <tr *ngFor="let i of FilterList"  appmouse>
+    <tr *ngFor="let i of FilterList;trackBy:trackByFn"  appmouse>
       <th class="col-1 td-wrap text-center">{{i['id']}}</th>
       <th class="col-2 td-wrap">{{i['title']}}</th>
       <th class="col-4 td-wrap">{{i['description']}}</th>
