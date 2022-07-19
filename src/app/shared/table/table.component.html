@@ -21,7 +21,7 @@
       <th class=" col-1" >حذف</th>
     </tr>
     </thead>
-    <tbody *ngIf="list.length>0" >
+    <tbody  >
     <tr *ngFor="let i of FilterList;trackBy:trackByFn"  appmouse>
       <th class="col-1 td-wrap text-center">{{i['id']}}</th>
       <th class="col-2 td-wrap">{{i['title']}}</th>

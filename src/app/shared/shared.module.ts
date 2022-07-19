@@ -5,10 +5,11 @@ import { TableComponent } from './table/table.component';
 
 import {MouseoverDirective} from "../directive/mouseover.directive";
 import { FormsModule } from '@angular/forms';
+import {TasktableDirective} from "../directive/tasktable.directive";
 @NgModule({
   declarations: [
     TableComponent,
-    MouseoverDirective
+    MouseoverDirective,
   ],
   exports: [
     TableComponent

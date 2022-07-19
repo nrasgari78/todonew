@@ -61,7 +61,7 @@ export class TableComponent implements OnChanges{
     }
 
   }
-  trackByFn(index:number,item:any){
-    return item.Id_Doctor
+  trackByFn(index:any,i:any){
+    return i.id
   }
 }

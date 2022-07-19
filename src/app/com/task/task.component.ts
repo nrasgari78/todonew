@@ -4,7 +4,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit, Output, SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -14,13 +14,14 @@ import {FormBuilder, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {DetailComponent} from "../detail/detail.component";
 import {TableComponent} from "../../shared/table/table.component";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit,DoCheck,OnChanges{
+export class TaskComponent implements OnInit,DoCheck,OnChanges,OnDestroy{
   @ViewChild(DetailComponent)DetailComponent: DetailComponent | undefined
   message:any='برنامه روزانه در حال ویرایش'
   taskList:Task[]=[]
@@ -28,6 +29,7 @@ export class TaskComponent implements OnInit,DoCheck,OnChanges{
   ModeEdite: boolean | undefined
   id?: number;
   loading: boolean=true;
+  subscription:Subscription
   constructor(private todosrv:TodoDataService) { }
 
 
@@ -51,9 +53,12 @@ ngOnChanges(changes: SimpleChanges) {
       }
     })
 }
+ngOnDestroy() {
+this.subscription.unsubscribe()
+}
 
   GetTasks() {
-    this.todosrv.getAllTasks().subscribe(res=>{
+   this.subscription= this.todosrv.getAllTasks().subscribe(res=>{
     if(res)
       this.loading = false
       this.taskList=res

@@ -5,18 +5,18 @@ import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { TaskComponent } from './com/task/task.component';
 import { DetailComponent } from './com/detail/detail.component';
-import { TasktableDirective } from './directive/tasktable.directive';
 import {SharedModule} from "./shared/shared.module";
 import {ngxLoadingAnimationTypes, NgxLoadingModule} from "ngx-loading";
-import {MouseoverDirective} from "./directive/mouseover.directive";
-
+import {HeaderComponent} from "./com/header/header.component";
+import { AboutComponent } from './com/about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
     DetailComponent,
-    TasktableDirective
+    HeaderComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
